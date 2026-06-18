@@ -8,6 +8,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react"
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
+}
+
 export function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -34,6 +40,10 @@ export function Contact() {
         const data = await res.json()
         throw new Error(data.error || "Грешка при изпращане.")
       }
+
+      // Конверсия — палим само при реален успех от API/Resend
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: "lead_form_submit" })
 
       setStatus("success")
       setFormData({ name: "", email: "", phone: "", message: "" })
