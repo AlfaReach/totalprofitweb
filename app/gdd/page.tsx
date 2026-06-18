@@ -9,6 +9,12 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { GDDMobileCTA } from '@/components/gdd-mobile-cta'
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
+}
+
 export default function GDDPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -36,6 +42,10 @@ export default function GDDPage() {
       })
 
       if (response.ok) {
+        // Конверсия за ГДД кампанията — отделен event от общата форма
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({ event: 'gdd_form_submit' })
+
         setSubmitted(true)
         setTimeout(() => {
           setFormData({ name: '', phone: '', incomeType: '' })
@@ -310,7 +320,7 @@ export default function GDDPage() {
                 <a href="mailto:office@totalprofit.bg" className="hover:text-foreground transition-colors">office@totalprofit.bg</a>
                 <span className="text-border">|</span>
                 <Link href="/privacy-policy" className="hover:text-foreground transition-colors">
-                  По��итика за поверителност
+                  Политика за поверителност
                 </Link>
               </div>
               <p>&copy; {new Date().getFullYear()} Total Profit</p>
