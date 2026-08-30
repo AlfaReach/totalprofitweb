@@ -9,6 +9,12 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { GDDMobileCTA } from '@/components/gdd-mobile-cta'
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
+}
+
 export default function GDDPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -36,6 +42,10 @@ export default function GDDPage() {
       })
 
       if (response.ok) {
+        // Конверсия за ГДД кампанията — отделен event от общата форма
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({ event: 'gdd_form_submit' })
+
         setSubmitted(true)
         setTimeout(() => {
           setFormData({ name: '', phone: '', incomeType: '' })
@@ -57,7 +67,6 @@ export default function GDDPage() {
         {/* Hero Section - Dark like main site */}
         <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#252525] to-[#1a1a1a]" />
-          <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5" />
 
           {/* Header overlaid on hero */}
           <header className="absolute top-0 left-0 right-0 z-50 py-4">
@@ -79,10 +88,11 @@ export default function GDDPage() {
           </header>
 
           <div className="relative z-10 mx-auto max-w-4xl px-6 py-24 text-center">
+            <nav aria-label="Breadcrumb" className="mb-7 flex justify-center gap-2 text-sm text-white/55"><Link href="/" className="hover:text-white">Начало</Link><span>/</span><span>ГДД за фирми</span></nav>
             <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 text-sm font-medium text-white/90 backdrop-blur-sm border border-white/10">
                 <Award className="h-4 w-4 text-amber-400" />
-                <span>15+ години опит | 500+ доволни клиенти</span>
+                <span>15+ години счетоводен опит</span>
               </div>
 
               <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/20 px-4 py-2.5 text-sm font-medium text-amber-200 backdrop-blur-sm border border-amber-500/30">
@@ -92,26 +102,26 @@ export default function GDDPage() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 text-balance leading-tight">
-              Подаваме ГДД на фирмата Ви до 24 часа
+              Съдействие за ГДД на фирмата Ви
             </h1>
 
             <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Годишна данъчна декларация по чл. 92 ЗКПО + годишен финансов отчет. Без посещение на офис — пращате документите, ние поемаме останалото.
+              Подготовка и подаване на годишната данъчна декларация по чл. 92 ЗКПО и съдействие по годишното счетоводно приключване. Процесът може да бъде организиран дистанционно.
             </p>
 
             {/* Trust signals */}
             <div className="flex flex-wrap justify-center gap-6 text-sm text-white/60 mb-10">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                <span>0 глоби от НАП</span>
+                <span>Преглед на документите</span>
               </div>
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-emerald-400" />
-                <span>Максимална законност</span>
+                <span>Работа по актуалните правила</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-emerald-400" />
-                <span>Експресна обработка</span>
+                <span>Ясен процес и срокове</span>
               </div>
             </div>
 
@@ -178,9 +188,7 @@ export default function GDDPage() {
                         <SelectItem value="eood">ЕООД</SelectItem>
                         <SelectItem value="ood">ООД</SelectItem>
                         <SelectItem value="ad">АД</SelectItem>
-                        <SelectItem value="et">ЕТ</SelectItem>
-                        <SelectItem value="svobodna">Свободна професия</SelectItem>
-                        <SelectItem value="other">Друго</SelectItem>
+                        <SelectItem value="other">Друго юридическо лице</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -215,8 +223,8 @@ export default function GDDPage() {
                   <Clock className="h-5 w-5 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Експресна обработка</h3>
-                  <p className="text-muted-foreground">Подаваме ГДД-то на фирмата Ви до 24 часа, преди крайния срок на 30 юни.</p>
+                  <h3 className="font-bold text-lg mb-2">Организирана обработка</h3>
+                  <p className="text-muted-foreground">След преглед на документите уточняваме необходимите стъпки и организацията за подаване преди крайния срок.</p>
                 </div>
               </div>
 
@@ -235,8 +243,8 @@ export default function GDDPage() {
                   <Shield className="h-5 w-5 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Максимална законност</h3>
-                  <p className="text-muted-foreground">15+ години опит, 500+ клиенти, 0 глоби от НАП. Коректно деклариране на печалбата и разходите.</p>
+                  <h3 className="font-bold text-lg mb-2">Преглед на информацията</h3>
+                  <p className="text-muted-foreground">Преглеждаме счетоводната информация и необходимите документи преди подаването на декларацията.</p>
                 </div>
               </div>
 
@@ -276,7 +284,7 @@ export default function GDDPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-background text-foreground hover:bg-background/90" asChild>
                 <a href="#form">
-                  Подай ГДД онлайн
+                  Заявете съдействие за ГДД
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -310,7 +318,7 @@ export default function GDDPage() {
                 <a href="mailto:office@totalprofit.bg" className="hover:text-foreground transition-colors">office@totalprofit.bg</a>
                 <span className="text-border">|</span>
                 <Link href="/privacy-policy" className="hover:text-foreground transition-colors">
-                  По��итика за поверителност
+                  Политика за поверителност
                 </Link>
               </div>
               <p>&copy; {new Date().getFullYear()} Total Profit</p>

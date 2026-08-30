@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export function AnalyticsLoader() {
   const [consent, setConsent] = useState<string | null>(null)
@@ -67,6 +69,10 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1251813450482768');
 fbq('track', 'PageView');`}
       </Script>
+
+      {/* Vercel analytics are also consent-gated for a consistent privacy posture. */}
+      <Analytics />
+      <SpeedInsights />
     </>
   )
 }

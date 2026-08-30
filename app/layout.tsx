@@ -1,74 +1,52 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { SchemaOrg } from "@/components/schema-org"
 import { CookieBanner } from "@/components/cookie-banner"
 import { AnalyticsLoader } from "@/components/analytics-loader"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { siteConfig } from "@/lib/site-config"
 
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
-})
+const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter", display: "swap" })
 
 export const metadata: Metadata = {
-  title: "Счетоводни услуги в София | Данъчни консултации и ТРЗ | Total Profit",
-  description:
-    "Счетоводна кантора в София и Велико Търново с 15+ години опит. Счетоводство, данъчни консултации и ТРЗ обслужване от 125 € / месец. Безплатен анализ до 24 часа.",
-  metadataBase: new URL("https://www.totalprofit.bg"),
+  metadataBase: new URL(siteConfig.url),
+  title: { default: "Total Profit | Счетоводна кантора в София", template: "%s | Total Profit" },
+  description: "Total Profit предлага счетоводни услуги, ТРЗ и данъчни консултации за фирми в София и онлайн в България.",
+  applicationName: siteConfig.name,
+  authors: [{ name: "Total Profit", url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "Accounting",
+  formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
-    title: "Счетоводни услуги в София | Total Profit",
-    description:
-      "Счетоводна кантора с 15+ години опит. Законна данъчна оптимизация, ТРЗ и регистрации. Безплатен анализ без обвързване.",
-    url: "https://www.totalprofit.bg",
-    siteName: "Total Profit",
+    siteName: siteConfig.name,
     locale: "bg_BG",
     type: "website",
-    images: [
-      {
-        url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Site-thumb-vKpadgD2OKHkHihtasDxlkjEuuymS5.png",
-        width: 1200,
-        height: 630,
-        alt: "Total Profit - Счетоводна Кантора",
-      },
-    ],
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "Total Profit — счетоводна кантора" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Счетоводни услуги в София | Total Profit",
-    description:
-      "15+ години опит. Счетоводство, данъци и ТРЗ. Безплатен анализ.",
-    images: ["/og-image.jpg"],
-  },
+  twitter: { card: "summary_large_image", images: [siteConfig.ogImage] },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-  alternates: {
-    canonical: "https://www.totalprofit.bg",
+    icon: [
+      { url: "/favicon.ico?v=7", sizes: "any" },
+      { url: "/favicon-32x32.png?v=7", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png?v=7", type: "image/png", sizes: "16x16" },
+    ],
+    shortcut: "/favicon.ico?v=7",
+    apple: "/apple-touch-icon.png?v=7",
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="bg">
-      <head>
-        <SchemaOrg />
-      </head>
+      <head><SchemaOrg /><link rel="alternate" type="application/rss+xml" title="Total Profit Blog RSS" href="/feed.xml" /></head>
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
         <WhatsAppButton />
         <CookieBanner />
         <AnalyticsLoader />
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )

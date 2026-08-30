@@ -5,8 +5,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "eslint .",
-    "start": "next start"
+    "lint": "tsc --noEmit",
+    "start": "next start",
+    "seo:indexnow": "node scripts/submit-indexnow.mjs",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "node scripts/snapshot-soro.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

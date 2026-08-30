@@ -1,65 +1,85 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Quote, Star, ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { Quote, Star, ExternalLink } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
+import { googleRating, googleReviews } from "@/lib/reviews"
 
-const testimonials = [
-  {
-    quote: "Работим със счетоводната кантора вече 3 години и сме много доволни. Освен че всичко е изрядно, често получаваме полезни съвети за оптимизиране на разходите и данъците. Комуникацията с екипа е винаги бърза и коректна.",
-    author: "А. М. Груп",
-    role: "Дигитална агенция",
-    rating: 5,
-  },
-  {
-    quote: "Като собственик на малък бизнес често имам въпроси за документи и данъци. Всеки път получавам ясен отговор и съдействие. Счетоводители, на които мога да разчитам.",
-    author: "П. Манев",
-    role: "Собственик на онлайн магазин",
-    rating: 5,
-  },
-  {
-    quote: "Работят перфектно, спазват всички срокове и ми дават ясни насоки при всеки въпрос. Винаги получавам бърза обратна връзка и отлично обслужване. 10/10!",
-    author: "Д-р Д. Георгиев",
-    role: "Зъболекар",
-    rating: 5,
-  },
-]
+function Stars({ size = "h-4 w-4" }: { size?: string }) {
+  return (
+    <span className="flex gap-0.5" aria-label="5 от 5 звезди">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <Star key={i} className={`${size} fill-amber-400 text-amber-400`} aria-hidden="true" />
+      ))}
+    </span>
+  )
+}
 
 export function Testimonials() {
+  const profileUrl = siteConfig.addresses.sofia.googleBusinessProfileUrl
+
   return (
     <section id="testimonials" className="py-28 bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <p className="text-sm font-medium tracking-widest text-muted-foreground uppercase mb-4">Отзиви</p>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">Какво казват нашите клиенти</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">Какво казват клиентите</h2>
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+          >
+            <Stars />
+            <span>{googleRating.value} в Google</span>
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-border hover:shadow-lg transition-shadow">
-              <CardContent className="pt-8 pb-6">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
+          {googleReviews.map((review) => (
+            <Card key={review.author} className="border-border hover:shadow-lg transition-shadow">
+              <CardContent className="flex h-full flex-col pt-8 pb-6">
+                <div className="mb-4">
+                  <Stars />
                 </div>
-                <Quote className="h-8 w-8 text-muted-foreground/20 mb-4" />
-                <p className="text-foreground leading-relaxed mb-6">{`"${testimonial.quote}"`}</p>
+                <Quote className="h-8 w-8 text-muted-foreground/20 mb-4" aria-hidden="true" />
+                <blockquote className="flex-1 text-foreground leading-relaxed mb-6">
+                  {`„${review.excerpt ? `${review.quote.replace(/[.!?]+\s*$/, "")}…` : review.quote}“`}
+                </blockquote>
                 <div className="border-t border-border pt-4">
-                  <p className="font-bold text-foreground">{testimonial.author}</p>
-                  {testimonial.role && <p className="text-sm font-medium text-muted-foreground">{testimonial.role}</p>}
+                  <p className="font-bold text-foreground">{review.author}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Google отзив{review.role ? ` · ${review.role}` : ""}
+                  </p>
+                  {review.excerpt && (
+                    <a
+                      href={profileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center text-sm font-medium hover:underline underline-offset-4"
+                    >
+                      Целият отзив в Google
+                      <ExternalLink className="ml-1.5 h-3 w-3" />
+                    </a>
+                  )}
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <Button size="lg" className="group" asChild>
-            <Link href="#contact">
-              СТАНИ НАШ ДОВОЛЕН КЛИЕНТ
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+        <div className="mt-14 flex flex-col items-center gap-4">
+          <Button size="lg" asChild>
+            <a href="/#contact-form">ИСКАМ БЕЗПЛАТЕН АНАЛИЗ</a>
           </Button>
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground"
+          >
+            Вижте всички отзиви в Google
+          </a>
         </div>
       </div>
     </section>

@@ -1,0 +1,29 @@
+# Total Profit
+
+Bulgarian brand name / alternate name: Тотал Профит
+
+> Total Profit, also written in Bulgarian as Тотал Профит, is a Bulgarian accounting firm with an office in Sofia, providing ongoing accounting, payroll/HR administration and tax consulting, plus remote service across Bulgaria.
+
+Canonical website: https://www.totalprofit.bg/
+Language: Bulgarian (bg)
+Legal entity: Тотал Профит ЕООД, EIK 208651940
+
+## Core pages
+- https://www.totalprofit.bg/ - Accounting firm in Sofia / commercial hub
+- https://www.totalprofit.bg/schetovodno-obsluzhvane - Ongoing accounting services
+- https://www.totalprofit.bg/ceni - Accounting service pricing information
+- https://www.totalprofit.bg/trz-uslugi-sofia - Payroll and personnel administration
+- https://www.totalprofit.bg/danachni-konsultacii - Tax consulting
+- https://www.totalprofit.bg/registraciya-na-firma - Company registration support
+- https://www.totalprofit.bg/dds-registraciya - VAT registration support
+- https://www.totalprofit.bg/godishno-priklyuchvane - Year-end accounting close
+- https://www.totalprofit.bg/danachna-zashtita - Accounting support during NRA checks and audits
+- https://www.totalprofit.bg/schetovodstvo-za-onlayn-magazin - Accounting for online stores
+- https://www.totalprofit.bg/schetovodstvo-za-svobodni-profesii - Accounting for freelancers / self-employed professionals
+- https://www.totalprofit.bg/blog - Accounting and tax blog
+- https://www.totalprofit.bg/za-nas - Company and team information
+- https://www.totalprofit.bg/kontakti - Contact information
+- https://www.totalprofit.bg/redakcionna-politika - Editorial and automated-blog policy
+
+## Editorial note
+The blog is updated through an automated publishing workflow and rendered as first-party HTML on TotalProfit.bg. Articles are general information and are not individual accounting, tax or legal advice. Numeric thresholds, deadlines and legal references may change; use current official Bulgarian sources before acting on a specific case.

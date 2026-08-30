@@ -3,9 +3,10 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Shield, Mail, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Политика за поверителност | Total Profit",
+  title: { absolute: "Политика за поверителност | Total Profit" },
   description: "Политика за поверителност и защита на личните данни на Total Profit ЕООД.",
   alternates: {
     canonical: "https://www.totalprofit.bg/privacy-policy",
@@ -13,8 +14,19 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPolicyPage() {
+  const url = `${siteConfig.url}/privacy-policy`
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Начало", item: siteConfig.url },
+      { "@type": "ListItem", position: 2, name: "Политика за поверителност", item: url },
+    ],
+  }
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <div className="min-h-screen bg-background">
       <header className="bg-foreground text-background">
         <div className="mx-auto max-w-7xl px-6 py-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -40,6 +52,7 @@ export default function PrivacyPolicyPage() {
 
       <section className="bg-foreground text-background pb-16 pt-8">
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
+          <nav aria-label="Breadcrumb" className="mb-6 flex justify-center gap-2 text-sm text-background/55"><Link href="/" className="hover:text-background">Начало</Link><span>/</span><span>Политика за поверителност</span></nav>
           <div className="flex justify-center mb-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-background/10">
               <Shield className="h-7 w-7 text-background" />
@@ -58,7 +71,7 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-lg font-bold mb-4">1. Администратор на лични данни</h2>
             <p className="text-muted-foreground mb-3">Администратор на личните Ви данни е <strong>Тотал Профит ЕООД</strong>, ЕИК: 208651940, с офиси на адрес:</p>
             <ul className="text-muted-foreground space-y-1 mb-4">
-              <li>бул. „Владимир Вазов" 17, ет. Партер, 1510 София</li>
+              <li>ул. „Баба Вида“ 1, 1510 София</li>
               <li>ул. Димитър Буйнозов 7, ет. Партер, Велико Търново</li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -136,8 +149,8 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-lg font-bold mb-4">7. Бисквитки (Cookies)</h2>
             <div className="grid sm:grid-cols-3 gap-3 mb-4">
               <div className="rounded-xl border p-4"><p className="font-semibold text-sm mb-2">Задължителни</p><p className="text-sm text-muted-foreground">Необходими за функционирането на сайта.</p></div>
-              <div className="rounded-xl border p-4"><p className="font-semibold text-sm mb-2">Аналитични</p><p className="text-sm text-muted-foreground">Google Analytics — само при изрично съгласие.</p></div>
-              <div className="rounded-xl border p-4"><p className="font-semibold text-sm mb-2">Маркетингови</p><p className="text-sm text-muted-foreground">В момента не се използват.</p></div>
+              <div className="rounded-xl border p-4"><p className="font-semibold text-sm mb-2">Аналитични</p><p className="text-sm text-muted-foreground">Google Analytics, Vercel Analytics и Speed Insights — само при изрично съгласие.</p></div>
+              <div className="rounded-xl border p-4"><p className="font-semibold text-sm mb-2">Маркетингови</p><p className="text-sm text-muted-foreground">Meta Pixel — само при изрично съгласие.</p></div>
             </div>
             <p className="text-sm text-muted-foreground">Управлявайте предпочитанията си чрез банера при първото посещение.</p>
           </div>
@@ -184,6 +197,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }

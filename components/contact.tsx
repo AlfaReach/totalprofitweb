@@ -7,6 +7,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
+
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
+}
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -34,6 +41,10 @@ export function Contact() {
         const data = await res.json()
         throw new Error(data.error || "Грешка при изпращане.")
       }
+
+      // Конверсия — палим само при реален успех от API/Resend
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: "lead_form_submit" })
 
       setStatus("success")
       setFormData({ name: "", email: "", phone: "", message: "" })
@@ -63,7 +74,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">Телефон</p>
-                  <a href="tel:+359898252516" className="text-background/70">+359 898 252 516</a>
+                  <a href={`tel:${siteConfig.phone}`} className="text-background/70">{siteConfig.phoneDisplay}</a>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -72,7 +83,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">Имейл</p>
-                  <a href="mailto:office@totalprofit.bg" className="text-background/70">office@totalprofit.bg</a>
+                  <a href={`mailto:${siteConfig.email}`} className="text-background/70">{siteConfig.email}</a>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -81,7 +92,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">Офис София</p>
-                  <p className="text-background/70">бул. "Владимир Вазов" 17, ет. Партер, 1510</p>
+                  <p className="text-background/70">{siteConfig.addresses.sofia.streetAddress}, {siteConfig.addresses.sofia.postalCode}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -112,7 +123,7 @@ export function Contact() {
           </div>
 
           {/* Form */}
-          <div className="bg-card text-foreground rounded-2xl p-8 shadow-2xl">
+          <div id="contact-form" className="scroll-mt-28 bg-card text-foreground rounded-2xl p-8 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="name">Име *</Label>

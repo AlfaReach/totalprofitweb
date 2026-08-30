@@ -4,7 +4,16 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { X, ChevronDown } from "lucide-react"
 
-const STORAGE_KEY = "tp_gdd_bar_open"
+// Auto-show the banner May 1 – June 30, every year. Hidden from July 1 onward.
+// Month is 0-indexed: May = 4, June = 5.
+function isCampaignActive(now = new Date()) {
+  const month = now.getMonth()
+  return month === 4 || month === 5
+}
+
+// Year-scoped so a visitor who dismissed last year's banner still gets a fresh
+// one when the next campaign opens.
+const STORAGE_KEY = `tp_gdd_bar_${new Date().getFullYear()}`
 
 export function AnnouncementBar() {
   const [open, setOpen] = useState(true)
@@ -27,6 +36,9 @@ export function AnnouncementBar() {
     setOpen(true)
     localStorage.setItem(STORAGE_KEY, "open")
   }
+
+  // Outside the May–June campaign window the banner doesn't render at all.
+  if (!isCampaignActive()) return null
 
   // Avoid hydration flash: render the default (open) state on the server,
   // then reconcile once mounted.

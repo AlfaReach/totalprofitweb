@@ -3,7 +3,7 @@ import { ArrowRight, User } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-const teamMembers = [
+export const teamMembers = [
   {
     name: "Пепа Кънчева",
     role: "Главен счетоводител",
@@ -42,6 +42,8 @@ const teamMembers = [
   },
 ]
 
+// NOTE: this component renders on both / and /za-nas. /za-nas has no contact form,
+// so the CTA must be the absolute /#contact-form, not a bare same-page anchor.
 export function About() {
   return (
     <section id="about" className="py-28 bg-secondary">
@@ -52,7 +54,7 @@ export function About() {
             Екипът зад вашия финансов успех
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            {'Работим като ваш вътрешен финансов отдел \u2013 с ясна комуникация, навременни отчети и проактивни препоръки.'}
+            {'Екипът на Total Profit включва счетоводители и специалисти по ТРЗ, ДДС и данъчни консултации.'}
           </p>
         </div>
 
@@ -62,10 +64,11 @@ export function About() {
               <div className="aspect-square rounded-2xl overflow-hidden bg-muted mb-4 relative">
                 {member.image ? (
                   <Image
-                    src={member.image || "/placeholder.svg"}
+                    src={member.image}
                     alt={member.name}
-                    width={300}
-                    height={300}
+                    width={400}
+                    height={400}
+                    sizes="(max-width: 767px) 45vw, (max-width: 1023px) 30vw, 176px"
                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (
@@ -85,7 +88,7 @@ export function About() {
 
         <div className="text-center">
           <Button size="lg" className="group" asChild>
-            <Link href="#contact">
+            <Link href="/#contact-form">
               Свържете се с нас
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>

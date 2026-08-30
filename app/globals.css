@@ -128,3 +128,19 @@
 }
 
 
+
+.article-html {
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+  line-height: 1.75;
+}
+.article-html > * + * { margin-top: 1.5rem; }
+.article-html h2 { margin-top: 2.25rem; font-size: 1.75rem; line-height: 1.2; font-weight: 700; color: var(--foreground); }
+.article-html h3 { margin-top: 1.75rem; font-size: 1.25rem; line-height: 1.35; font-weight: 600; color: var(--foreground); }
+.article-html ul, .article-html ol { padding-left: 1.4rem; }
+.article-html ul { list-style: disc; }
+.article-html ol { list-style: decimal; }
+.article-html li + li { margin-top: .5rem; }
+.article-html a { color: var(--foreground); text-decoration: underline; text-underline-offset: 4px; }
+.article-html img { max-width: 100%; height: auto; border-radius: .75rem; }
+.article-html table { width: 100%; border-collapse: collapse; overflow-x: auto; display: block; }
+.article-html th, .article-html td { border: 1px solid var(--border); padding: .65rem; text-align: left; }
