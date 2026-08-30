@@ -15,12 +15,6 @@ declare global {
   }
 }
 
-declare global {
-  interface Window {
-    dataLayer?: Record<string, unknown>[]
-  }
-}
-
 export function Contact() {
   const [formData, setFormData] = useState({
     name: "",
