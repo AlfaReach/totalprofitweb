@@ -90,6 +90,8 @@ export function CookieBanner() {
           </Button>
         </div>
         <button
+          type="button"
+          aria-label="Откажи бисквитките"
           onClick={handleDecline}
           className="absolute top-4 right-4 md:hidden text-muted-foreground hover:text-foreground"
         >

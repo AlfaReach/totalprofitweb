@@ -9,21 +9,21 @@ Language: Bulgarian (bg)
 Legal entity: Тотал Профит ЕООД, EIK 208651940
 
 ## Core pages
-- https://www.totalprofit.bg/ - Accounting firm in Sofia / commercial hub
-- https://www.totalprofit.bg/schetovodno-obsluzhvane - Ongoing accounting services
-- https://www.totalprofit.bg/ceni - Accounting service pricing information
-- https://www.totalprofit.bg/trz-uslugi-sofia - Payroll and personnel administration
-- https://www.totalprofit.bg/danachni-konsultacii - Tax consulting
-- https://www.totalprofit.bg/registraciya-na-firma - Company registration support
-- https://www.totalprofit.bg/dds-registraciya - VAT registration support
-- https://www.totalprofit.bg/godishno-priklyuchvane - Year-end accounting close
-- https://www.totalprofit.bg/danachna-zashtita - Accounting support during NRA checks and audits
-- https://www.totalprofit.bg/schetovodstvo-za-onlayn-magazin - Accounting for online stores
-- https://www.totalprofit.bg/schetovodstvo-za-svobodni-profesii - Accounting for freelancers / self-employed professionals
-- https://www.totalprofit.bg/blog - Accounting and tax blog
-- https://www.totalprofit.bg/za-nas - Company and team information
-- https://www.totalprofit.bg/kontakti - Contact information
-- https://www.totalprofit.bg/redakcionna-politika - Editorial and automated-blog policy
+- [Начало](https://www.totalprofit.bg/): Accounting firm in Sofia / commercial hub
+- [Счетоводно обслужване](https://www.totalprofit.bg/schetovodno-obsluzhvane): Ongoing accounting services
+- [Цени](https://www.totalprofit.bg/ceni): Accounting service pricing information
+- [ТРЗ услуги София](https://www.totalprofit.bg/trz-uslugi-sofia): Payroll and personnel administration
+- [Данъчни консултации](https://www.totalprofit.bg/danachni-konsultacii): Tax consulting
+- [Регистрация на фирма](https://www.totalprofit.bg/registraciya-na-firma): Company registration support
+- [ДДС регистрация](https://www.totalprofit.bg/dds-registraciya): VAT registration support
+- [Годишно приключване](https://www.totalprofit.bg/godishno-priklyuchvane): Year-end accounting close
+- [Данъчна защита](https://www.totalprofit.bg/danachna-zashtita): Accounting support during NRA checks and audits
+- [Счетоводство за онлайн магазин](https://www.totalprofit.bg/schetovodstvo-za-onlayn-magazin): Accounting for online stores
+- [Счетоводство за свободни професии](https://www.totalprofit.bg/schetovodstvo-za-svobodni-profesii): Accounting for freelancers / self-employed professionals
+- [Блог](https://www.totalprofit.bg/blog): Accounting and tax blog
+- [За нас](https://www.totalprofit.bg/za-nas): Company and team information
+- [Контакти](https://www.totalprofit.bg/kontakti): Contact information
+- [Редакционна политика](https://www.totalprofit.bg/redakcionna-politika): Editorial and automated-blog policy
 
 ## Editorial note
 The blog is updated through an automated publishing workflow and rendered as first-party HTML on TotalProfit.bg. Articles are general information and are not individual accounting, tax or legal advice. Numeric thresholds, deadlines and legal references may change; use current official Bulgarian sources before acting on a specific case.

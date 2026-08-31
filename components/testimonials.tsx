@@ -6,7 +6,7 @@ import { googleRating, googleReviews } from "@/lib/reviews"
 
 function Stars({ size = "h-4 w-4" }: { size?: string }) {
   return (
-    <span className="flex gap-0.5" aria-label="5 от 5 звезди">
+    <span className="flex gap-0.5" role="img" aria-label="5 от 5 звезди">
       {[0, 1, 2, 3, 4].map((i) => (
         <Star key={i} className={`${size} fill-amber-400 text-amber-400`} aria-hidden="true" />
       ))}

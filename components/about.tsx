@@ -58,7 +58,7 @@ export function About({ linkProfiles = false }: { linkProfiles?: boolean } = {})
                 <h3 className="font-semibold text-foreground">{member.name}</h3>
                 <p className="text-sm text-muted-foreground">{member.role}</p>
                 {member.specialty && (
-                  <p className="text-xs text-muted-foreground/70 mt-1">{member.specialty}</p>
+                  <p className="text-xs text-muted-foreground/90 mt-1">{member.specialty}</p>
                 )}
               </>
             )
