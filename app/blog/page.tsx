@@ -34,91 +34,39 @@ function resolveCluster(tema?: string): BlogCluster | undefined {
 type SearchParams = Record<string, string | string[] | undefined>
 
 /**
- * Click-tracking parameters. These are NEVER redirected away and never appear in a
- * canonical — Google Ads (`gclid`/`gbraid`/`wbraid`), Meta (`fbclid`), Microsoft
- * (`msclkid`) and manual `utm_*` tagging all read the landing URL. Stripping them
- * with a redirect silently breaks campaign attribution: the browser lands on the
- * cleaned URL and the analytics beacon fires with the tag already gone.
- *
- * They are excluded from the "is this URL canonical?" comparison instead, and carried
- * through whenever a redirect does have to happen for some other reason.
+ * The one canonical shape for a listing URL: known `tema` first, then an in-range
+ * `page`. Anything else the visitor sent (unknown filter values, page 0/-5/abc,
+ * out-of-range pages, stray tracking-style params) is dropped.
  */
-const TRACKING_PARAMS = new Set([
-  "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id",
-  "gclid", "gbraid", "wbraid", "dclid", "fbclid", "msclkid", "ttclid", "yclid",
-  "li_fat_id", "igshid", "mc_cid", "mc_eid", "_gl",
-])
+function canonicalListingPath(params: SearchParams, maxPage: number) {
+  const query = new URLSearchParams()
+  const cluster = resolveCluster(first(params.tema))
+  if (cluster) query.set("tema", cluster)
+  const requested = Number.parseInt(first(params.page) || "1", 10)
+  if (Number.isInteger(requested) && requested > 1 && requested <= maxPage) query.set("page", String(requested))
+  const qs = query.toString()
+  return `/blog${qs ? `?${qs}` : ""}`
+}
+
+/** The URL as the visitor actually requested it, in a comparable form. */
+function requestedListingPath(params: SearchParams) {
+  const query = new URLSearchParams()
+  for (const [key, value] of Object.entries(params)) {
+    const v = first(value)
+    if (v !== undefined) query.set(key, v)
+  }
+  const qs = query.toString()
+  return `/blog${qs ? `?${qs}` : ""}`
+}
 
 function first(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value
 }
 
-function trackingQuery(params: SearchParams) {
-  const query = new URLSearchParams()
-  for (const [key, value] of Object.entries(params)) {
-    if (!TRACKING_PARAMS.has(key)) continue
-    const v = first(value)
-    if (v !== undefined) query.set(key, v)
-  }
-  return query
-}
-
-/** Every param that is not click tracking, in a stable comparable form. */
-function meaningfulQuery(params: SearchParams) {
-  const query = new URLSearchParams()
-  for (const [key, value] of Object.entries(params)) {
-    if (TRACKING_PARAMS.has(key)) continue
-    const v = first(value)
-    if (v !== undefined) query.set(key, v)
-  }
-  query.sort()
-  return query.toString()
-}
-
-/**
- * The one canonical shape. An article is exactly `?post=<slug>`; a listing is a known
- * `tema` then an in-range `page`. Unknown filter values, page 0/-5/abc, out-of-range
- * pages and stray parameters are all dropped.
- */
-function canonicalQuery(params: SearchParams, maxPage: number) {
-  const query = new URLSearchParams()
-  const post = first(params.post)
-  if (post) {
-    query.set("post", post)
-    return query
-  }
-  const cluster = resolveCluster(first(params.tema))
-  if (cluster) query.set("tema", cluster)
-  const requested = Number.parseInt(first(params.page) || "1", 10)
-  if (Number.isInteger(requested) && requested > 1 && requested <= maxPage) query.set("page", String(requested))
-  return query
-}
-
-function canonicalPath(params: SearchParams, maxPage: number) {
-  const qs = canonicalQuery(params, maxPage).toString()
-  return `/blog${qs ? `?${qs}` : ""}`
-}
-
-/**
- * Where to send a request whose meaningful params are not already canonical.
- * Tracking params ride along so attribution survives the redirect.
- */
-function redirectTarget(params: SearchParams, maxPage: number) {
-  const query = canonicalQuery(params, maxPage)
-  for (const [key, value] of trackingQuery(params).entries()) query.append(key, value)
-  const qs = query.toString()
-  return `/blog${qs ? `?${qs}` : ""}`
-}
-
-/** True when the meaningful part of the request already matches the canonical form. */
-function isCanonicalRequest(params: SearchParams, maxPage: number) {
-  const canonical = new URLSearchParams(canonicalQuery(params, maxPage))
-  canonical.sort()
-  return meaningfulQuery(params) === canonical.toString()
-}
-
 function absoluteBlogUrl(params: SearchParams, maxPage = 1) {
-  return `${siteConfig.url}${canonicalPath(params, maxPage)}`
+  const post = first(params.post)
+  if (post) return `${siteConfig.url}/blog?post=${encodeURIComponent(post)}`
+  return `${siteConfig.url}${canonicalListingPath(params, maxPage)}`
 }
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
@@ -196,11 +144,6 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
 
   const postParam = first(params.post)
   if (postParam) {
-    // An article is exactly ?post=<slug> (plus any click tracking). Anything else
-    // — ?post=X&foo=bar, a stray &page=, reordered params — normalises first, so the
-    // article has one URL rather than an open-ended set of 200s.
-    if (!isCanonicalRequest(params, 1)) permanentRedirect(redirectTarget(params, 1))
-
     const { post, liveOk } = await getSoroPostStateBySlug(postParam)
     if (post) {
       const related = await getRelatedPosts(post)
@@ -229,9 +172,9 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   // Serve one URL per listing view. Unknown filter values, page 0/-5/abc, out-of-range
   // pages and stray params previously each returned their own 200 with identical
   // content — an unbounded crawlable space that canonical tags could only hint away.
-  // Click-tracking params are exempt and ride along; the canonical form is a fixed
-  // point, so this cannot loop.
-  if (!isCanonicalRequest(params, totalPages)) permanentRedirect(redirectTarget(params, totalPages))
+  // The canonical form is a fixed point, so this cannot loop.
+  const canonicalPath = canonicalListingPath(params, totalPages)
+  if (canonicalPath !== requestedListingPath(params)) permanentRedirect(canonicalPath)
   const page = Math.min(requestedPage, totalPages)
   const start = (page - 1) * PAGE_SIZE
   const posts = filteredPosts.slice(start, start + PAGE_SIZE)

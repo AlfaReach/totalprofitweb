@@ -2,20 +2,45 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, User } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { authorProfiles } from "@/lib/authors"
 
-/**
- * Single source of truth for the team: lib/authors.ts.
- *
- * The same six people previously existed here AND in lib/authors.ts. They agreed, but
- * nothing enforced it — updating a job title in one place and not the other would put
- * the visible team grid out of step with the Person schema on /za-nas, which is an
- * E-E-A-T inconsistency rather than just untidiness.
- *
- * Only name / role / specialty / image are rendered here; slug and bio are unused by
- * this component and carried for the author pages.
- */
-export const teamMembers = authorProfiles
+export const teamMembers = [
+  {
+    name: "Пепа Кънчева",
+    role: "Главен счетоводител",
+    specialty: "Данъчен експерт и финансов консултант",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%9F%D0%B5%D0%BF%D0%B0-KtkKKVsbBUFThesePbeVB1VcRsLps7.png",
+  },
+  {
+    name: "Антоан Рушидов",
+    role: "Управител",
+    specialty: "Производство, търговия и износ",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%90%D0%BD%D1%82%D0%BE%D0%B0%D0%BD-C1yh7KnIkyDJREMe31KFS9o2wK3Gzg.png",
+  },
+  {
+    name: "Владислав Атанасов",
+    role: "Младши счетоводител",
+    specialty: "Услуги и търговия",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D1%81%D0%BB%D0%B0%D0%B2-nuvNivTmligBp4rTckOXekvQ34PqhV.png",
+  },
+  {
+    name: "Марина Азгорова",
+    role: "Счетоводител",
+    specialty: "Отговорник и специалист ЗДДС",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%9C%D0%B0%D1%80%D0%B8%D0%BD%D0%B0-dp44GsMw3mWzYKvAmcu0HycYfGYjvT.png",
+  },
+  {
+    name: "Йоана Христова",
+    role: "Счетоводител",
+    specialty: "Експерт ТРЗ, личен състав и осигуряване",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%99%D0%BE%D0%B0%D0%BD%D0%B0-Zp8FktvYgWpAWmCwPTXSDSmVVs98hB.png",
+  },
+  {
+    name: "Силвия Стефанова",
+    role: "Счетоводител",
+    specialty: "Експерт счетоводство и финанси",
+    image: "https://rqt8f2dldo9sqmkn.public.blob.vercel-storage.com/silviya.jpg",
+  },
+]
 
 // NOTE: this component renders on both / and /za-nas. /za-nas has no contact form,
 // so the CTA must be the absolute /#contact-form, not a bare same-page anchor.
