@@ -1,19 +1,15 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
-
-declare global {
-  interface Window {
-    dataLayer?: Record<string, unknown>[]
-  }
-}
+import { track } from "@/lib/analytics"
+import { captureFirstTouch, getLeadContext } from "@/lib/lead-context"
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -22,8 +18,25 @@ export function Contact() {
     phone: "",
     message: "",
   })
+  // Invisible honeypot. Real people never see this field, so anything in it is a bot.
+  // The name is deliberately obscure: a field called "company" gets filled by browser
+  // autofill on a B2B form, which would silently throw away a genuine enquiry.
+  const [websiteCheck, setWebsiteCheck] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState("")
+  const startedRef = useRef(false)
+
+  useEffect(() => {
+    captureFirstTouch()
+  }, [])
+
+  // One `form_start` per visitor, on the first real keystroke — not on focus, so a stray
+  // tab through the form is not counted as an started application.
+  const noteStart = () => {
+    if (startedRef.current) return
+    startedRef.current = true
+    track("form_start", { form_id: "contact" })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,23 +44,33 @@ export function Contact() {
     setErrorMessage("")
 
     try {
+      const context = getLeadContext()
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          website_check: websiteCheck,
+          context,
+        }),
       })
 
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || "Грешка при изпращане.")
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || "Грешка при изпращане.")
       }
 
-      // Конверсия — палим само при реален успех от API/Resend
-      window.dataLayer = window.dataLayer || []
-      window.dataLayer.push({ event: "lead_form_submit" })
+      // Конверсия — пали се само след потвърден успешен изпратен имейл от API/Resend.
+      // Името `lead_form_submit` е обвързано с тригер в GTM контейнера и не се преименува.
+      track("lead_form_submit", {
+        form_id: "contact",
+        source_page: context.sourcePath,
+        landing_page: context.landingPage,
+      })
 
       setStatus("success")
       setFormData({ name: "", email: "", phone: "", message: "" })
+      setWebsiteCheck("")
     } catch (err) {
       setStatus("error")
       setErrorMessage(err instanceof Error ? err.message : "Грешка при изпращане. Моля опитайте по-късно.")
@@ -101,7 +124,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-medium">Офис Велико Търново</p>
-                  <p className="text-background/70">ул. Димитър Буйнозов 7, ет. Партер</p>
+                  <p className="text-background/70">ул. Димитър Буйнозов 7, ет. партер</p>
                 </div>
               </div>
             </div>
@@ -117,14 +140,27 @@ export function Contact() {
               </span>
               <span className="flex items-center gap-2 text-background/80">
                 <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                Отговор до 24ч
+                Отговор до 24 часа
               </span>
             </div>
           </div>
 
           {/* Form */}
           <div id="contact-form" className="scroll-mt-28 bg-card text-foreground rounded-2xl p-8 shadow-2xl">
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} onInput={noteStart} className="space-y-5">
+              {/* Honeypot — hidden from people and from assistive technology, visible to bots. */}
+              <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                <label htmlFor="tp-website-check">Не попълвайте това поле</label>
+                <input
+                  id="tp-website-check"
+                  name="website_check"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={websiteCheck}
+                  onChange={(e) => setWebsiteCheck(e.target.value)}
+                />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="name">Име *</Label>
                 <Input
@@ -185,7 +221,7 @@ export function Contact() {
                     className="bg-transparent"
                     onClick={() => setStatus("idle")}
                   >
-                    Изпрати ново запитване
+                    Изпратете ново запитване
                   </Button>
                 </div>
               ) : (

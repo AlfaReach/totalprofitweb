@@ -8,7 +8,7 @@ const services = [
     icon: Calculator,
     title: "Счетоводно обслужване",
     description: "От отчитането на документи и месечните справки-декларации до междинните и годишни финансови отчети и данъчни декларации за физически и юридически лица.",
-    highlight: "Цени започващи от 125 \u20AC / месец",
+    highlight: "от 125 \u20AC/месец",
     href: "/schetovodno-obsluzhvane",
   },
   {
@@ -22,13 +22,13 @@ const services = [
     icon: Users,
     title: "ТРЗ и личен състав",
     description: "Заплати, осигуровки, трудови договори и уведомления",
-    highlight: "от 7 \u20AC / служител",
+    highlight: "от 7 \u20AC/служител",
     href: "/trz-uslugi-sofia",
   },
   {
     icon: Building2,
     title: "Регистрация на фирми",
-    description: "ЕООД, ООД, ЕТ \u2013 бързо и коректно, всички документи",
+    description: "ЕООД, ООД, ЕТ \u2013 подготовка и координация на документите",
     highlight: "от 150 \u20AC",
     href: "/registraciya-na-firma",
   },
@@ -42,8 +42,8 @@ const services = [
   {
     icon: Scale,
     title: "Данъчна защита",
-    description: "Представителство пред НАП и НОИ",
-    highlight: "счетоводно съдействие при проверки",
+    description: "Съдействие при проверки и ревизии от НАП и НОИ",
+    highlight: "преглед на искания и подготовка на справки",
     href: "/danachna-zashtita",
   },
 ]
@@ -79,11 +79,7 @@ export function Services() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-muted-foreground italic">
-          {"Работим с професионални счетоводни системи от най-висок клас, които осигуряват точност, навременност и пълна сигурност при проверки."}
-        </p>
-
-        <div className="mt-8 text-center">
+        <div className="mt-12 text-center">
           <Button size="lg" className="group" asChild>
             <Link href="#contact-form">
               ПОИСКАЙТЕ ОФЕРТА ЗА ВАШИЯ БИЗНЕС

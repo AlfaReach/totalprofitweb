@@ -22,17 +22,25 @@ export type GoogleReview = {
 
 export const googleReviews: GoogleReview[] = [
   {
+    // NOT re-verified on 2026-08-30 — the profile only exposes its three most recent reviews
+    // without paging, and this one is older. Check it before the next content change.
     author: "Ivo Ivo",
     quote: "Коректно отношение. Работим заедно от доста време. Благодаря.",
     role: "собственик на фирма за довършителни ремонти",
   },
   {
+    // Checked against the live profile on 2026-08-30: this is the complete review, so the
+    // excerpt flag is gone and the trailing ellipsis with it. The middle sentence was
+    // previously dropped while the card still rendered "…" at the end, which implied the
+    // text continued rather than that something had been cut from the middle.
+    // Reproduced verbatim, including the reviewer's own spelling of "префервнциални".
     author: "Elza Pariny",
     quote:
-      "Работя с тях вече 5 години. Любезни и адекватни професионалисти са. Имат специално отношение към всеки клиент. Доверявам им се.",
-    excerpt: true,
+      "Работя с тях вече 5 години. Любезни и адекватни професионалисти са. Имат специално отношение към всеки клиент. Предлагат достъпни префервнциални условия. Доверявам им се.",
   },
   {
+    // Opening verified verbatim against the live profile on 2026-08-30. Google itself
+    // truncates the rest, so this stays an excerpt.
     author: "Elena Miteva",
     quote:
       "Миналата година бях на косъм да изпусна срока за ГДД и бях сигурна, че ще стане проблем. Препоръчаха ми Total Profit.",

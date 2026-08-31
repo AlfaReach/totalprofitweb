@@ -2,49 +2,26 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, User } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { authorProfiles } from "@/lib/authors"
 
-export const teamMembers = [
-  {
-    name: "Пепа Кънчева",
-    role: "Главен счетоводител",
-    specialty: "Данъчен експерт и финансов консултант",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%9F%D0%B5%D0%BF%D0%B0-KtkKKVsbBUFThesePbeVB1VcRsLps7.png",
-  },
-  {
-    name: "Антоан Рушидов",
-    role: "Управител",
-    specialty: "Производство, търговия и износ",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%90%D0%BD%D1%82%D0%BE%D0%B0%D0%BD-C1yh7KnIkyDJREMe31KFS9o2wK3Gzg.png",
-  },
-  {
-    name: "Владислав Атанасов",
-    role: "Младши счетоводител",
-    specialty: "Услуги и търговия",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D1%81%D0%BB%D0%B0%D0%B2-nuvNivTmligBp4rTckOXekvQ34PqhV.png",
-  },
-  {
-    name: "Марина Азгорова",
-    role: "Счетоводител",
-    specialty: "Отговорник и специалист ЗДДС",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%9C%D0%B0%D1%80%D0%B8%D0%BD%D0%B0-dp44GsMw3mWzYKvAmcu0HycYfGYjvT.png",
-  },
-  {
-    name: "Йоана Христова",
-    role: "Счетоводител",
-    specialty: "Експерт ТРЗ, личен състав и осигуряване",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%D0%99%D0%BE%D0%B0%D0%BD%D0%B0-Zp8FktvYgWpAWmCwPTXSDSmVVs98hB.png",
-  },
-  {
-    name: "Силвия Стефанова",
-    role: "Счетоводител",
-    specialty: "Експерт счетоводство и финанси",
-    image: "https://rqt8f2dldo9sqmkn.public.blob.vercel-storage.com/silviya.jpg",
-  },
-]
+/**
+ * Single source of truth for the team: lib/authors.ts.
+ *
+ * The same six people previously existed here AND in lib/authors.ts. They agreed, but
+ * nothing enforced it — updating a job title in one place and not the other would put
+ * the visible team grid out of step with the Person schema on /za-nas, which is an
+ * E-E-A-T inconsistency rather than just untidiness.
+ */
+export const teamMembers = authorProfiles
 
 // NOTE: this component renders on both / and /za-nas. /za-nas has no contact form,
 // so the CTA must be the absolute /#contact-form, not a bare same-page anchor.
-export function About() {
+//
+// `linkProfiles` is used only on /za-nas. That page previously rendered this grid AND a
+// second "Профили на екипа" list of the same six people. The duplicate is gone; the team
+// cards themselves now carry the links to /avtori/*, so the author pages keep their
+// internal links without the same six names appearing twice on one page.
+export function About({ linkProfiles = false }: { linkProfiles?: boolean } = {}) {
   return (
     <section id="about" className="py-28 bg-secondary">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -59,31 +36,43 @@ export function About() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 mb-12">
-          {teamMembers.map((member, index) => (
-            <div key={index} className="text-center group">
-              <div className="aspect-square rounded-2xl overflow-hidden bg-muted mb-4 relative">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={400}
-                    height={400}
-                    sizes="(max-width: 767px) 45vw, (max-width: 1023px) 30vw, 176px"
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-muted">
-                    <User className="w-16 h-16 text-muted-foreground/40" />
-                  </div>
+          {teamMembers.map((member) => {
+            const body = (
+              <>
+                <div className="aspect-square rounded-2xl overflow-hidden bg-muted mb-4 relative">
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={400}
+                      height={400}
+                      sizes="(max-width: 767px) 45vw, (max-width: 1023px) 30vw, 176px"
+                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-muted">
+                      <User className="w-16 h-16 text-muted-foreground/40" />
+                    </div>
+                  )}
+                </div>
+                <h3 className="font-semibold text-foreground">{member.name}</h3>
+                <p className="text-sm text-muted-foreground">{member.role}</p>
+                {member.specialty && (
+                  <p className="text-xs text-muted-foreground/70 mt-1">{member.specialty}</p>
                 )}
+              </>
+            )
+
+            return linkProfiles ? (
+              <Link key={member.slug} href={`/avtori/${member.slug}`} className="block text-center group">
+                {body}
+              </Link>
+            ) : (
+              <div key={member.slug} className="text-center group">
+                {body}
               </div>
-              <h3 className="font-semibold text-foreground">{member.name}</h3>
-              <p className="text-sm text-muted-foreground">{member.role}</p>
-              {member.specialty && (
-                <p className="text-xs text-muted-foreground/70 mt-1">{member.specialty}</p>
-              )}
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         <div className="text-center">

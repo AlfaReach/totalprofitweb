@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
 const navigation = [
-  { name: "Услуги", href: "/schetovodno-obsluzhvane" },
+  { name: "Услуги", href: "/#services" },
   { name: "Цени", href: "/ceni" },
   { name: "За нас", href: "/za-nas" },
   { name: "Отзиви", href: "/#testimonials" },

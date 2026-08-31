@@ -14,7 +14,7 @@ export const siteConfig = {
   // Versioned so Facebook/LinkedIn/X/Google refetch instead of serving the previously
   // cached (and wrongly square) thumbnail. Bump when the image changes.
   ogImage: "/og-image.jpg?v=2",
-  openingHours: { opens: "09:00", closes: "18:00" },
+  openingHours: { opens: "09:00", closes: "17:00" },
   addresses: {
     sofia: {
       label: "Офис София",
@@ -28,7 +28,7 @@ export const siteConfig = {
     },
     velikoTarnovo: {
       label: "Офис Велико Търново",
-      streetAddress: "ул. Димитър Буйнозов 7, ет. Партер",
+      streetAddress: "ул. Димитър Буйнозов 7, ет. партер",
       locality: "Велико Търново",
       country: "BG",
     },

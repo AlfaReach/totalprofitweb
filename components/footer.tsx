@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { primaryServices, siteConfig, verticalServices } from "@/lib/site-config"
+import { CookieSettingsLink } from "@/components/cookie-settings-link"
 
 export function Footer() {
   return (
@@ -15,7 +16,7 @@ export function Footer() {
             <div className="mt-4 space-y-1 text-sm text-muted-foreground">
               <a href={`tel:${siteConfig.phone}`} className="block hover:text-foreground">{siteConfig.phoneDisplay}</a>
               <a href={`mailto:${siteConfig.email}`} className="block hover:text-foreground">{siteConfig.email}</a>
-              <a href={siteConfig.addresses.sofia.mapsUrl} target="_blank" rel="noopener noreferrer" className="block hover:text-foreground">{siteConfig.addresses.sofia.streetAddress}, {siteConfig.addresses.sofia.locality}</a>
+              <p>{siteConfig.addresses.sofia.streetAddress}, {siteConfig.addresses.sofia.locality}</p>
             </div>
           </div>
 
@@ -37,13 +38,14 @@ export function Footer() {
               <Link href="/gdd" className="text-sm text-muted-foreground hover:text-foreground">Годишна данъчна декларация</Link>
               <Link href="/redakcionna-politika" className="text-sm text-muted-foreground hover:text-foreground">Редакционна политика</Link>
               <Link href="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground">Поверителност</Link>
+              <CookieSettingsLink className="text-left text-sm text-muted-foreground hover:text-foreground" />
             </nav>
           </div>
         </div>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {siteConfig.legalName}, ЕИК {siteConfig.legalId}</p>
-          <div className="flex gap-4"><a href={siteConfig.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Facebook</a><a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a><a href={siteConfig.addresses.sofia.googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Google Maps</a></div>
+          <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
+          <div className="flex gap-4"><a href={siteConfig.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Facebook</a><a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a></div>
         </div>
       </div>
     </footer>

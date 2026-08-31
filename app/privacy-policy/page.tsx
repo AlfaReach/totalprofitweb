@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
           </div>
           <p className="text-sm font-medium tracking-widest text-background/60 uppercase mb-4">Правна информация</p>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Политика за поверителност</h1>
-          <p className="mt-4 text-background/70">Последна актуализация: март 2026 г.</p>
+          <p className="mt-4 text-background/70">Последна актуализация: август 2026 г.</p>
         </div>
       </section>
 
@@ -72,7 +72,7 @@ export default function PrivacyPolicyPage() {
             <p className="text-muted-foreground mb-3">Администратор на личните Ви данни е <strong>Тотал Профит ЕООД</strong>, ЕИК: 208651940, с офиси на адрес:</p>
             <ul className="text-muted-foreground space-y-1 mb-4">
               <li>ул. „Баба Вида“ 1, 1510 София</li>
-              <li>ул. Димитър Буйнозов 7, ет. Партер, Велико Търново</li>
+              <li>ул. Димитър Буйнозов 7, ет. партер, Велико Търново</li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="tel:+359898252516" className="flex items-center gap-2 font-medium"><Phone className="h-4 w-4" />+359 898 252 516</a>
@@ -86,7 +86,7 @@ export default function PrivacyPolicyPage() {
               <li>• Имена (физически лица и представители на фирми)</li>
               <li>• Имейл адрес</li>
               <li>• Телефонен номер</li>
-              <li>• Информация от формата за контакт или чрез WhatsApp</li>
+              <li>• Информация от формата за контакт или чрез WhatsApp или Viber</li>
               <li>• Счетоводни данни (ЕГН, ЕИК, финансова информация) — само при сключване на договор</li>
             </ul>
           </div>
@@ -95,19 +95,19 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-lg font-bold mb-4">3. Цели и правно основание за обработката</h2>
             <div className="space-y-4">
               <div className="border-l-2 border-border pl-4">
-                <p className="font-semibold mb-1">Изпълнение на договор (чл. 6, ал. 1, б. „б" GDPR)</p>
+                <p className="font-semibold mb-1">Изпълнение на договор (чл. 6, ал. 1, б. „б“ GDPR)</p>
                 <p className="text-muted-foreground text-sm">За предоставяне на счетоводни, данъчни и ТРЗ услуги, регистрация на фирми и данъчна защита.</p>
               </div>
               <div className="border-l-2 border-border pl-4">
-                <p className="font-semibold mb-1">Законово задължение (чл. 6, ал. 1, б. „в" GDPR)</p>
+                <p className="font-semibold mb-1">Законово задължение (чл. 6, ал. 1, б. „в“ GDPR)</p>
                 <p className="text-muted-foreground text-sm">При спазване на Закона за счетоводството, ЗДДС, КСО, КТ и други нормативни актове.</p>
               </div>
               <div className="border-l-2 border-border pl-4">
-                <p className="font-semibold mb-1">Легитимен интерес (чл. 6, ал. 1, б. „е" GDPR)</p>
-                <p className="text-muted-foreground text-sm">За отговор на запитвания чрез формата за контакт или WhatsApp. Данните се използват единствено за отговор на запитването.</p>
+                <p className="font-semibold mb-1">Легитимен интерес (чл. 6, ал. 1, б. „е“ GDPR)</p>
+                <p className="text-muted-foreground text-sm">За отговор на запитвания чрез формата за контакт или чрез WhatsApp или Viber. Данните се използват единствено за отговор на запитването.</p>
               </div>
               <div className="border-l-2 border-border pl-4">
-                <p className="font-semibold mb-1">Съгласие (чл. 6, ал. 1, б. „а" GDPR)</p>
+                <p className="font-semibold mb-1">Съгласие (чл. 6, ал. 1, б. „а“ GDPR)</p>
                 <p className="text-muted-foreground text-sm">При изрично съгласие — за изпращане на счетоводни съвети и информационни материали.</p>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function PrivacyPolicyPage() {
               <div className="rounded-xl border border-border bg-secondary/50 p-4"><p className="font-semibold text-sm mb-1">Право на възражение</p><p className="text-sm text-muted-foreground">Да се противопоставите на обработка въз основа на легитимен интерес.</p></div>
             </div>
             <p className="text-sm text-muted-foreground mb-2">За упражняване изпратете имейл на <a href="mailto:office@totalprofit.bg" className="font-medium underline">office@totalprofit.bg</a>. Ще отговорим до 30 дни.</p>
-            <p className="text-sm text-muted-foreground">Жалби: <strong>КЗЛД</strong>, ул. „Проф. Цветан Лазаров" 2, 1592 София — <a href="https://www.cpdp.bg" target="_blank" rel="noopener noreferrer" className="underline">www.cpdp.bg</a></p>
+            <p className="text-sm text-muted-foreground">Жалби: <strong>КЗЛД</strong>, ул. „Проф. Цветан Лазаров“ 2, 1592 София — <a href="https://www.cpdp.bg" target="_blank" rel="noopener noreferrer" className="underline">www.cpdp.bg</a></p>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-8">

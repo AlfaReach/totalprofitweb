@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: { absolute: "Цени на счетоводни услуги | Total Profit" },
-  description: "Ориентировъчни цени за счетоводно обслужване. Начална цена от 125 € / месец за малки фирми; точната оферта зависи от дейността, документите, ДДС и персонала.",
+  description: "Ориентировъчни цени за счетоводно обслужване. Начална цена от 125 €/месец за малки фирми; точната оферта зависи от дейността, документите, ДДС и персонала.",
   alternates: { canonical: `${siteConfig.url}/ceni` },
   openGraph: { title: "Цени на счетоводни услуги | Total Profit", description: "Как се формира цената на счетоводното обслужване и как да получите точна оферта.", url: `${siteConfig.url}/ceni`, siteName: siteConfig.name, locale: "bg_BG", type: "website", images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "Цени на счетоводни услуги — Total Profit" }] },
 }
@@ -52,7 +52,7 @@ export default function PricingPage() {
               <nav className="mb-7 flex gap-2 text-sm text-background/60" aria-label="Breadcrumb"><Link href="/" className="hover:text-background">Начало</Link><span>/</span><span>Цени</span></nav>
               <p className="mb-4 text-sm font-medium uppercase tracking-widest text-background/60">Цени</p>
               <h1 className="max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Цени на счетоводни услуги</h1>
-              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-background/75 md:text-xl">Публикуваната ни начална цена за счетоводно обслужване на малки фирми е <strong className="text-background">от 125 € / месец</strong>. Точната цена се определя според реалната работа, а не само според правната форма на дружеството.</p>
+              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-background/75 md:text-xl">Публикуваната ни начална цена за счетоводно обслужване на малки фирми е <strong className="text-background">от 125 €/месец</strong>. Точната цена се определя според реалната работа, а не само според правната форма на дружеството.</p>
               <div className="mt-8"><Button size="lg" variant="secondary" asChild><Link href="/#contact-form">Получете конкретна оферта <ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div>
             </div>
           </section>
@@ -66,7 +66,7 @@ export default function PricingPage() {
               </div>
               <aside className="h-fit rounded-2xl bg-secondary p-8">
                 <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Ориентир</p>
-                <p className="mt-4 text-4xl font-bold">от 125 € <span className="text-base font-normal text-muted-foreground">/ месец</span></p>
+                <p className="mt-4 text-4xl font-bold">от 125 €<span className="text-base font-normal text-muted-foreground">/месец</span></p>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">Началната цена е ориентир за малка фирма. Не обещаваме конкретна крайна цена без да знаем дейността и обема работа.</p>
                 <Button className="mt-7 w-full" asChild><Link href="/#contact-form">Поискайте оферта</Link></Button>
               </aside>

@@ -44,17 +44,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MPZ3LQK8');`}
       </Script>
 
-      {/* Google Analytics */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-G53L4J28WK"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-G53L4J28WK');`}
-      </Script>
+      {/* Google Analytics 4 and Google Ads are configured INSIDE the GTM container above.
+          The container was inspected on 2026-08-30 and already carries a Google tag for
+          G-G53L4J28WK and AW-18234638471, plus a Conversion Linker. Loading gtag.js here as
+          well ran a second config for the same measurement ID, so every visit produced two
+          page_view hits in GA4. The direct snippet is deliberately gone — add tags in GTM.
+          The Meta Pixel stays here because the container has no Facebook tag. */}
 
       {/* Meta Pixel */}
       <Script id="meta-pixel" strategy="afterInteractive">

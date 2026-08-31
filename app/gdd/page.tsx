@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle2, Clock, Shield, Phone, Award, ArrowRight } from 'lucide-react'
@@ -8,12 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { GDDMobileCTA } from '@/components/gdd-mobile-cta'
-
-declare global {
-  interface Window {
-    dataLayer?: Record<string, unknown>[]
-  }
-}
+import { track } from '@/lib/analytics'
+import { captureFirstTouch, getLeadContext } from '@/lib/lead-context'
 
 export default function GDDPage() {
   const [formData, setFormData] = useState({
@@ -23,12 +19,19 @@ export default function GDDPage() {
   })
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    captureFirstTouch()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setErrorMessage('')
 
     try {
+      const context = getLeadContext()
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,22 +41,28 @@ export default function GDDPage() {
           email: 'gdd@totalprofit.bg',
           subject: `ГДД заявка - ${formData.incomeType}`,
           message: `Тип доход: ${formData.incomeType}\nТелефон: ${formData.phone}`,
+          context,
         }),
       })
 
-      if (response.ok) {
-        // Конверсия за ГДД кампанията — отделен event от общата форма
-        window.dataLayer = window.dataLayer || []
-        window.dataLayer.push({ event: 'gdd_form_submit' })
-
-        setSubmitted(true)
-        setTimeout(() => {
-          setFormData({ name: '', phone: '', incomeType: '' })
-          setSubmitted(false)
-        }, 3000)
+      const data = await response.json().catch(() => ({}))
+      // Previously a failed send did nothing visible at all: the spinner stopped and the
+      // form sat there, so the visitor believed the request had gone through. Surface it.
+      if (!response.ok || !data?.success) {
+        throw new Error(data?.error || 'Грешка при изпращане. Моля опитайте по-късно.')
       }
+
+      // Конверсия за ГДД кампанията — отделен event от общата форма, пали се само след
+      // потвърден успешен изпратен имейл.
+      track('gdd_form_submit', { form_id: 'gdd', landing_page: context.landingPage })
+
+      setSubmitted(true)
+      setTimeout(() => {
+        setFormData({ name: '', phone: '', incomeType: '' })
+        setSubmitted(false)
+      }, 3000)
     } catch (error) {
-      console.error('Form submission error:', error)
+      setErrorMessage(error instanceof Error ? error.message : 'Грешка при изпращане. Моля опитайте по-късно.')
     } finally {
       setIsLoading(false)
     }
@@ -198,8 +207,12 @@ export default function GDDPage() {
                     disabled={isLoading || !formData.name || !formData.phone || !formData.incomeType}
                     className="w-full h-12 text-base font-semibold"
                   >
-                    {isLoading ? 'Изпраща се...' : 'Изпрати заявка'}
+                    {isLoading ? 'Изпраща се...' : 'Изпратете заявка'}
                   </Button>
+
+                  {errorMessage && (
+                    <p className="text-sm text-center text-red-500">{errorMessage}</p>
+                  )}
 
                   <p className="text-xs text-muted-foreground text-center pt-2">
                     Или се обадете директно на{' '}
@@ -293,7 +306,7 @@ export default function GDDPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <Phone className="h-4 w-4" />
-                Свържи се с нас
+                Свържете се с нас
               </a>
             </div>
           </div>

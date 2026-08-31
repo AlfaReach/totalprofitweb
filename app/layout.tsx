@@ -5,7 +5,8 @@ import "./globals.css"
 import { SchemaOrg } from "@/components/schema-org"
 import { CookieBanner } from "@/components/cookie-banner"
 import { AnalyticsLoader } from "@/components/analytics-loader"
-import { WhatsAppButton } from "@/components/whatsapp-button"
+import { ContactLauncher } from "@/components/contact-launcher"
+import { InteractionTracker } from "@/components/interaction-tracker"
 import { siteConfig } from "@/lib/site-config"
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter", display: "swap" })
@@ -44,9 +45,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head><SchemaOrg /><link rel="alternate" type="application/rss+xml" title="Total Profit Blog RSS" href="/feed.xml" /></head>
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
-        <WhatsAppButton />
+        <ContactLauncher />
         <CookieBanner />
         <AnalyticsLoader />
+        <InteractionTracker />
       </body>
     </html>
   )

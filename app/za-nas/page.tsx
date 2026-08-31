@@ -50,21 +50,15 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <About />
+          <About linkProfiles />
 
           <section className="border-t border-border py-16">
             <div className="mx-auto max-w-5xl px-6 lg:px-8">
-              <div className="grid gap-10 lg:grid-cols-2">
-                <div>
-                  <h2 className="text-2xl font-bold tracking-tight">Как работим</h2>
-                  <p className="mt-4 leading-7 text-muted-foreground">В началото уточняваме дейността, документите, ДДС статуса, персонала и текущите срокове. След това определяме конкретния обхват на работа и начина на обмен на информация.</p>
-                  <p className="mt-4 leading-7 text-muted-foreground">При конкретен данъчен или счетоводен казус разглеждаме реалните факти и документи, вместо да прилагаме универсални решения към различни бизнеси.</p>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold tracking-tight">Профили на екипа</h2>
-                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                    {authorProfiles.map((member) => <Link key={member.slug} href={`/avtori/${member.slug}`} className="rounded-xl border border-border px-4 py-3 text-sm hover:bg-secondary"><span className="font-medium">{member.name}</span><span className="block text-muted-foreground">{member.role}</span></Link>)}
-                  </div>
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight">Как работим</h2>
+                <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                  <p className="leading-7 text-muted-foreground">В началото уточняваме дейността, документите, ДДС статуса, персонала и текущите срокове. След това определяме конкретния обхват на работа и начина на обмен на информация.</p>
+                  <p className="leading-7 text-muted-foreground">При конкретен данъчен или счетоводен казус разглеждаме реалните факти и документи, вместо да прилагаме универсални решения към различни бизнеси.</p>
                 </div>
               </div>
               <p className="mt-10 text-sm leading-6 text-muted-foreground">Информационните материали в блога имат общ характер. Вижте <Link href="/redakcionna-politika" className="font-medium text-foreground underline underline-offset-4">редакционната политика</Link> за начина, по който автоматизираните публикации се обозначават и поддържат.</p>

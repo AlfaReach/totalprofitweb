@@ -2,29 +2,32 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Calculator, Users, MessageCircle, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 
+/**
+ * These four used to render as a stats row: a big bold word in the slot where a number goes,
+ * left over from the "500+ клиенти / 98% / 0 глоби" block that was removed for lack of
+ * evidence. An adjective in number typography reads as a broken widget, so the split is gone
+ * and each point is now simply a heading and a sentence. Same four points, same four icons,
+ * same CTA — no numeric claim implied.
+ */
 const results = [
   {
     icon: Calculator,
-    stat: "Ясни",
-    title: "сметки и срокове",
+    title: "Ясни сметки и срокове",
     description: "Подреден процес за документи, декларации и текуща отчетност",
   },
   {
     icon: Users,
-    stat: "Един",
-    title: "екип за счетоводство и ТРЗ",
+    title: "Един екип за счетоводство и ТРЗ",
     description: "Свързани процеси и по-малко прехвърляне между различни доставчици",
   },
   {
     icon: ShieldCheck,
-    stat: "Практичен",
-    title: "данъчен подход",
+    title: "Практичен данъчен подход",
     description: "Решения според реалната дейност и конкретните документи",
   },
   {
     icon: MessageCircle,
-    stat: "Директна",
-    title: "комуникация",
+    title: "Директна комуникация",
     description: "Ясни отговори, конкретни стъпки и човек, към когото да се обърнете",
   },
 ]
@@ -34,7 +37,7 @@ export function Results() {
     <section id="results" className="py-28 bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <p className="text-sm font-medium tracking-widest text-background/60 uppercase mb-4">Как работим</p>
+          <p className="text-sm font-medium tracking-widest text-background/60 uppercase mb-4">Ползи</p>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">Какво получавате от Total Profit</h2>
         </div>
 
@@ -44,9 +47,8 @@ export function Results() {
               <div className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-background/10 backdrop-blur-sm">
                 <result.icon className="h-7 w-7 text-background" />
               </div>
-              <p className="text-3xl font-bold text-background">{result.stat}</p>
-              <p className="mt-2 font-semibold text-background">{result.title}</p>
-              <p className="mt-1 text-sm text-background/60">{result.description}</p>
+              <h3 className="text-lg font-semibold text-background text-balance">{result.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-background/60">{result.description}</p>
             </div>
           ))}
         </div>

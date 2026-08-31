@@ -223,9 +223,12 @@ function parseRss(xml: string): BlogPost[] {
 
     const slug = slugFromLink(link, title, item)
     if (!slug) continue
-    const date = pubDate && !Number.isNaN(Date.parse(pubDate))
-      ? new Date(pubDate).toISOString().slice(0, 10)
-      : new Date().toISOString().slice(0, 10)
+    // A missing or malformed pubDate used to fall back to "today", which stamped an invented
+    // publication date on the article and pushed a false lastmod into the sitemap every time
+    // the feed was re-read. Withhold the item instead — the feed is machine-generated, so a
+    // malformed date is a feed bug that gets fixed, not a permanent state.
+    if (!pubDate || Number.isNaN(Date.parse(pubDate))) continue
+    const date = new Date(pubDate).toISOString().slice(0, 10)
     const description = plainText(descriptionHtml).slice(0, 220) || bodyText.slice(0, 200)
     const classified = classify(title, html)
 

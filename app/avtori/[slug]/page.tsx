@@ -83,9 +83,6 @@ export default async function AuthorPage({ params }: Props) {
                 <p className="mt-3 text-lg font-medium">{author.role}</p>
                 <p className="mt-1 text-muted-foreground">{author.specialty}</p>
                 <p className="mt-7 leading-7 text-muted-foreground">{author.bio}</p>
-                <div className="mt-8 rounded-2xl bg-secondary p-6 text-sm leading-6 text-muted-foreground">
-                  Профилът съдържа само публично посочената роля и специализация на човека в екипа. Не публикуваме непотвърдени квалификации, членства или години опит.
-                </div>
               </div>
             </div>
           </div>
