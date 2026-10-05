@@ -27,15 +27,15 @@ const services = [
   },
   {
     icon: Building2,
-    title: "Регистрация на фирми",
-    description: "ЕООД, ООД, ЕТ \u2013 подготовка и координация на документите",
+    title: "Съдействие при регистрация\nна фирма",
+    description: "Консултация за ЕООД, ООД или ЕТ и помощ по процеса",
     highlight: "от 150 \u20AC",
     href: "/registraciya-na-firma",
   },
   {
     icon: Shield,
-    title: "ДДС регистрация",
-    description: "Регистрация, дерегистрация и месечни декларации",
+    title: "Съдействие при ДДС регистрация",
+    description: "Помощ при регистрация и дерегистрация, месечни декларации",
     highlight: "включено в абонамента",
     href: "/dds-registraciya",
   },
@@ -70,7 +70,7 @@ export function Services() {
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-foreground text-background">
                     <service.icon className="h-6 w-6" />
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{service.title}</h3>
+                  <h3 className="font-semibold text-lg mb-2 whitespace-pre-line">{service.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{service.description}</p>
                   <p className="text-sm font-semibold text-foreground">{service.highlight}</p>
                 </CardContent>

@@ -86,7 +86,7 @@ export function ContactLauncher() {
         aria-expanded={open}
         aria-controls="tp-contact-options"
         aria-label={open ? "Затвори опциите за връзка" : "Свържете се с нас"}
-        className="ml-auto flex h-14 w-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform hover:scale-105"
+        className="ml-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 ring-4 ring-emerald-600/20 transition-transform hover:scale-105 hover:bg-emerald-700"
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>

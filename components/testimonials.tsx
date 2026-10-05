@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Quote, Star, ExternalLink } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
 import { googleRating, googleReviews } from "@/lib/reviews"
+import { ReviewQuote } from "@/components/review-quote"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
 function Stars({ size = "h-4 w-4" }: { size?: string }) {
   return (
@@ -35,17 +37,21 @@ export function Testimonials() {
           </a>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        {/* Same 3-column look as before; arrows page through the rest. All reviews stay in the
+            DOM (only visually off-screen), so nothing is hidden from crawlers. */}
+        <Carousel opts={{ align: "start", loop: true, slidesToScroll: "auto" }} className="px-11 md:px-14">
+          <CarouselContent className="-ml-8">
           {googleReviews.map((review) => (
-            <Card key={review.author} className="border-border hover:shadow-lg transition-shadow">
+            <CarouselItem key={review.author} className="pl-8 md:basis-1/3">
+            <Card className="h-full border-border hover:shadow-lg transition-shadow">
               <CardContent className="flex h-full flex-col pt-8 pb-6">
                 <div className="mb-4">
                   <Stars />
                 </div>
                 <Quote className="h-8 w-8 text-muted-foreground/20 mb-4" aria-hidden="true" />
-                <blockquote className="flex-1 text-foreground leading-relaxed mb-6">
-                  {`„${review.excerpt ? `${review.quote.replace(/[.!?]+\s*$/, "")}…` : review.quote}“`}
-                </blockquote>
+                <ReviewQuote
+                  text={`„${review.excerpt ? `${review.quote.replace(/[.!?]+\s*$/, "")}…` : review.quote}“`}
+                />
                 <div className="border-t border-border pt-4">
                   <p className="font-bold text-foreground">{review.author}</p>
                   <p className="text-sm text-muted-foreground">
@@ -65,8 +71,12 @@ export function Testimonials() {
                 </div>
               </CardContent>
             </Card>
+            </CarouselItem>
           ))}
-        </div>
+          </CarouselContent>
+          <CarouselPrevious className="left-0 size-9 md:size-10" aria-label="Предишни отзиви" />
+          <CarouselNext className="right-0 size-9 md:size-10" aria-label="Следващи отзиви" />
+        </Carousel>
 
         <div className="mt-14 flex flex-col items-center gap-4">
           <Button size="lg" asChild>
