@@ -14,7 +14,7 @@ export const siteConfig = {
   // Versioned so Facebook/LinkedIn/X/Google refetch instead of serving the previously
   // cached (and wrongly square) thumbnail. Bump when the image changes.
   ogImage: "/og-image.jpg?v=2",
-  openingHours: { opens: "09:00", closes: "17:00" },
+  openingHours: { opens: "07:00", closes: "23:00" },
   addresses: {
     sofia: {
       label: "Офис София",

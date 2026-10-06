@@ -42,7 +42,7 @@ export function SchemaOrg() {
         },
         areaServed: [{ "@type": "City", name: "София" }, { "@type": "Country", name: "България" }],
         openingHoursSpecification: [
-          { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: siteConfig.openingHours.opens, closes: siteConfig.openingHours.closes },
+          { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: siteConfig.openingHours.opens, closes: siteConfig.openingHours.closes },
         ],
       },
       {
