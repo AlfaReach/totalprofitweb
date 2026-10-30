@@ -46,6 +46,7 @@ export function Footer() {
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {siteConfig.legalName}</p>
           <div className="flex gap-4"><a href={siteConfig.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Facebook</a><a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Instagram</a></div>
+          <p>Дизайн и разработка: <a href="https://www.alfareach.com/" target="_blank" rel="noopener" className="hover:text-foreground">AlfaReach</a></p>
         </div>
       </div>
     </footer>
