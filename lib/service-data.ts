@@ -12,16 +12,22 @@ export type ServicePageData = {
   sections: { title: string; answer: string; paragraphs?: string[]; bullets?: string[] }[]
   faq: { question: string; answer: string }[]
   related: { title: string; href: string }[]
+  /** Optional starting price shown under the H1 (e.g. "от 125 €/месец"). */
+  priceFrom?: string
+  /** Render the lead form in the hero instead of sending visitors to the homepage form. */
+  inlineForm?: boolean
 }
 
 export const servicePages: Record<string, ServicePageData> = {
   "schetovodno-obsluzhvane": {
     slug: "schetovodno-obsluzhvane",
-    title: "Счетоводно обслужване за фирми",
-    metaTitle: "Счетоводно обслужване за фирми | Total Profit",
+    title: "Счетоводно обслужване на фирми в София",
+    metaTitle: "Счетоводно обслужване на фирми в София | Total Profit",
     description: "Абонаментно счетоводно обслужване за ЕООД, ООД и други бизнеси: текущо счетоводство, декларации, отчети и координация на сроковете.",
     eyebrow: "Счетоводно обслужване",
-    intro: "Поемаме текущата счетоводна организация на фирмата и събираме процесите около документи, декларации, отчети и срокове на едно място. Работим от София и дистанционно с клиенти от цяла България.",
+    intro: "Търсите счетоводител в София? Поемаме текущата счетоводна организация на фирмата и събираме процесите около документи, декларации, отчети и срокове на едно място. Работим и дистанционно с клиенти от цяла България.",
+    priceFrom: "от 125 €/месец",
+    inlineForm: true,
     directAnswer: "Счетоводното обслужване е постоянна услуга, при която външен счетоводен екип организира текущото отчитане на бизнеса, периодичните декларации, справките и годишното приключване. Конкретният обхват зависи от дейността, ДДС статуса, броя документи, персонала и нуждата от допълнителни справки или консултации.",
     bullets: [
       "Осчетоводяване на първични счетоводни документи",

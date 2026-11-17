@@ -15,19 +15,24 @@ export function Hero() {
         <div className="flex justify-center mb-8 lg:mb-12">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur-sm border border-white/10">
             <Award className="h-4 w-4 text-amber-400" />
-            <span>Счетоводна кантора Total Profit · София</span>
+            {/* The page's H1 for search relevance ("счетоводна кантора София"); styled exactly like the old badge text. */}
+            <h1>Счетоводна кантора Total Profit · София</h1>
           </div>
         </div>
 
         <div className="grid gap-16 lg:grid-cols-[1.15fr_1fr] lg:items-start">
           {/* Left: the original hero wording (H1, intro, trust points). */}
           <div className="mx-auto max-w-4xl text-center lg:mx-0 lg:max-w-none lg:text-left">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl text-balance leading-tight">
+            <p className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl text-balance leading-tight">
               Плащате повече данъци, отколкото трябва?
-            </h1>
+            </p>
 
             <p className="mt-6 text-xl text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed" suppressHydrationWarning>
               Безплатен първоначален анализ на счетоводството и данъчната ви организация – с ясни препоръки какво може да се подобри и какви са следващите стъпки.
+            </p>
+
+            <p className="mt-4 text-lg text-white/80">
+              Счетоводно обслужване <strong className="text-white">от 125 €/месец</strong>
             </p>
 
             {/* Mobile / tablet: the original hero, unchanged — CTA button + centred trust row. */}

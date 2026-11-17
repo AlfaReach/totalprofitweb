@@ -1,14 +1,19 @@
 import Link from "next/link"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { InnerHeader } from "@/components/inner-header"
 import { Footer } from "@/components/footer"
+import { LeadForm } from "@/components/lead-form"
 import type { ServicePageData } from "@/lib/service-data"
 import { siteConfig } from "@/lib/site-config"
+import { WHATSAPP_URL } from "@/lib/contact-links"
 
 export function ServicePage({ service }: { service: ServicePageData }) {
   const serviceUrl = `${siteConfig.url}/${service.slug}`
   const visibleFaq = service.faq.slice(0, 6)
+  // Pages with an inline form keep the visitor here; "#form" is also what InteractionTracker
+  // counts as a CTA click. All other service pages keep sending people to the homepage form.
+  const formHref = service.inlineForm ? "#form" : "/#contact-form"
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -48,17 +53,35 @@ export function ServicePage({ service }: { service: ServicePageData }) {
         <InnerHeader />
         <main>
           <section className="bg-foreground py-16 text-background md:py-20">
-            <div className="mx-auto max-w-5xl px-6 lg:px-8">
-              <nav aria-label="Breadcrumb" className="mb-6 flex gap-2 text-sm text-background/55">
-                <Link href="/" className="hover:text-background">Начало</Link><span>/</span><span aria-current="page">{service.eyebrow}</span>
-              </nav>
-              <p className="mb-4 text-sm font-medium uppercase tracking-widest text-background/60">{service.eyebrow}</p>
-              <h1 className="max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">{service.title}</h1>
-              <p className="mt-5 max-w-3xl text-lg leading-relaxed text-background/70">{service.intro}</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button size="lg" variant="secondary" asChild><Link href="/#contact-form">Поискайте оферта <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
-                <Button size="lg" variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background" asChild><a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a></Button>
+            <div className={service.inlineForm ? "mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.15fr_1fr] lg:items-start lg:px-8" : "mx-auto max-w-5xl px-6 lg:px-8"}>
+              <div>
+                <nav aria-label="Breadcrumb" className="mb-6 flex gap-2 text-sm text-background/55">
+                  <Link href="/" className="hover:text-background">Начало</Link><span>/</span><span aria-current="page">{service.eyebrow}</span>
+                </nav>
+                <p className="mb-4 text-sm font-medium uppercase tracking-widest text-background/60">{service.eyebrow}</p>
+                <h1 className="max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">{service.title}</h1>
+                {service.priceFrom && (
+                  <p className="mt-5 inline-flex items-baseline gap-2 rounded-full bg-background/10 px-4 py-2 text-background">
+                    <span className="text-sm text-background/70">Цена</span>
+                    <strong className="text-lg">{service.priceFrom}</strong>
+                  </p>
+                )}
+                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-background/70">{service.intro}</p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button size="lg" variant="secondary" asChild><Link href={formHref}>Поискайте оферта <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+                  <Button size="lg" variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background" asChild><a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a></Button>
+                  {service.inlineForm && (
+                    <Button size="lg" variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background" asChild><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp</a></Button>
+                  )}
+                </div>
               </div>
+              {service.inlineForm && (
+                <div id="form" className="scroll-mt-28 rounded-2xl bg-card p-6 text-foreground shadow-2xl sm:p-8">
+                  <p className="text-xl font-bold tracking-tight">Поискайте оферта</p>
+                  <p className="mt-1 mb-6 text-sm text-muted-foreground">Ще се свържем с вас до 24 часа.</p>
+                  <LeadForm idPrefix="service" location="service" messageRows={3} />
+                </div>
+              )}
             </div>
           </section>
 
@@ -80,7 +103,7 @@ export function ServicePage({ service }: { service: ServicePageData }) {
                 <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
                   {service.whoFor.map((item) => <li key={item} className="flex gap-2"><span aria-hidden="true">•</span><span>{item}</span></li>)}
                 </ul>
-                <Button className="mt-7 w-full" asChild><Link href="/#contact-form">Безплатен анализ</Link></Button>
+                <Button className="mt-7 w-full" asChild><Link href={formHref}>Безплатен анализ</Link></Button>
               </aside>
             </div>
           </section>
@@ -137,7 +160,7 @@ export function ServicePage({ service }: { service: ServicePageData }) {
             <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Искате конкретна оферта за вашия бизнес?</h2>
               <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">Попълнете кратката форма и ще се свържем с вас с нужните следващи стъпки.</p>
-              <Button size="lg" className="mt-7" asChild><Link href="/#contact-form">Към формата <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+              <Button size="lg" className="mt-7" asChild><Link href={formHref}>Към формата <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
             </div>
           </section>
         </main>

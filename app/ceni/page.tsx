@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { InnerHeader } from "@/components/inner-header"
 import { Footer } from "@/components/footer"
+import { LeadForm } from "@/components/lead-form"
 import { siteConfig } from "@/lib/site-config"
+import { WHATSAPP_URL } from "@/lib/contact-links"
 
 export const metadata: Metadata = {
   title: { absolute: "Цени на счетоводни услуги | Total Profit" },
@@ -53,7 +55,11 @@ export default function PricingPage() {
               <p className="mb-4 text-sm font-medium uppercase tracking-widest text-background/60">Цени</p>
               <h1 className="max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">Цени на счетоводни услуги</h1>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-background/75 md:text-xl">Публикуваната ни начална цена за счетоводно обслужване на малки фирми е <strong className="text-background">от 125 €/месец</strong>. Точната цена се определя според реалната работа, а не само според правната форма на дружеството.</p>
-              <div className="mt-8"><Button size="lg" variant="secondary" asChild><Link href="/#contact-form">Получете конкретна оферта <ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button size="lg" variant="secondary" asChild><Link href="#form">Получете конкретна оферта <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+                <Button size="lg" variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background" asChild><a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a></Button>
+                <Button size="lg" variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background" asChild><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"><MessageCircle className="mr-2 h-4 w-4" />WhatsApp</a></Button>
+              </div>
             </div>
           </section>
 
@@ -68,8 +74,21 @@ export default function PricingPage() {
                 <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Ориентир</p>
                 <p className="mt-4 text-4xl font-bold">от 125 €<span className="text-base font-normal text-muted-foreground">/месец</span></p>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">Началната цена е ориентир за малка фирма. Не обещаваме конкретна крайна цена без да знаем дейността и обема работа.</p>
-                <Button className="mt-7 w-full" asChild><Link href="/#contact-form">Поискайте оферта</Link></Button>
+                <Button className="mt-7 w-full" asChild><Link href="#form">Поискайте оферта</Link></Button>
               </aside>
+            </div>
+          </section>
+
+          <section id="form" className="scroll-mt-28 py-20">
+            <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-2 lg:items-start lg:px-8">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Поискайте конкретна оферта</h2>
+                <p className="mt-4 leading-7 text-muted-foreground">Опишете накратко дейността на фирмата и ще ви изпратим оферта според реалния обем работа. Ще се свържем с вас до 24 часа.</p>
+                <p className="mt-6 text-sm text-muted-foreground">Предпочитате разговор? <a href={`tel:${siteConfig.phone}`} className="font-semibold text-foreground underline-offset-4 hover:underline">{siteConfig.phoneDisplay}</a></p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
+                <LeadForm idPrefix="pricing" location="pricing" messageRows={3} />
+              </div>
             </div>
           </section>
 

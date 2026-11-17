@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { MessageCircle, Phone, X } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
-
-const WHATSAPP_TEXT = encodeURIComponent("Здравейте, искам безплатен анализ на бизнеса ми")
-const WHATSAPP_URL = `https://wa.me/${siteConfig.phone.replace("+", "")}?text=${WHATSAPP_TEXT}`
+import { WHATSAPP_URL } from "@/lib/contact-links"
 const VIBER_URL = `viber://chat?number=${encodeURIComponent(siteConfig.phone)}`
 
 function WhatsAppIcon({ className }: { className?: string }) {

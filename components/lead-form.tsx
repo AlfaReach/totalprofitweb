@@ -16,7 +16,7 @@ import { captureFirstTouch, getLeadContext } from "@/lib/lead-context"
  * Both instances send exactly the same thing to /api/contact and fire exactly the same
  * events (`form_start`, `lead_form_submit` with form_id "contact"), so GTM triggers and
  * the Google Ads conversion are untouched. `form_location` is an extra, informational
- * parameter ("hero" | "bottom") — nothing in GTM depends on it.
+ * parameter ("hero" | "bottom" | "service" | "pricing") — nothing in GTM depends on it.
  *
  * `idPrefix` keeps element ids unique when both forms are on the same page.
  */
@@ -26,7 +26,7 @@ export function LeadForm({
   messageRows = 4,
 }: {
   idPrefix: string
-  location: "hero" | "bottom"
+  location: "hero" | "bottom" | "service" | "pricing"
   messageRows?: number
 }) {
   const [formData, setFormData] = useState({
