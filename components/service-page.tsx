@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { InnerHeader } from "@/components/inner-header"
 import { Footer } from "@/components/footer"
 import { LeadForm } from "@/components/lead-form"
+import { MobileCallBar } from "@/components/mobile-call-bar"
 import type { ServicePageData } from "@/lib/service-data"
 import { siteConfig } from "@/lib/site-config"
 import { WHATSAPP_URL } from "@/lib/contact-links"
@@ -165,6 +166,7 @@ export function ServicePage({ service }: { service: ServicePageData }) {
           </section>
         </main>
         <Footer />
+        {service.inlineForm && <MobileCallBar formHref="#form" />}
       </div>
     </>
   )

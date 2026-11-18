@@ -10,6 +10,7 @@ import { Contact } from "@/components/contact"
 import { HomeFaq } from "@/components/home-faq"
 import { HomeServicesOverview } from "@/components/home-services-overview"
 import { Footer } from "@/components/footer"
+import { MobileCallBar } from "@/components/mobile-call-bar"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <MobileCallBar formHref="#contact-form" />
     </>
   )
 }

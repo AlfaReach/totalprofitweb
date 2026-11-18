@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { InnerHeader } from "@/components/inner-header"
 import { Footer } from "@/components/footer"
 import { LeadForm } from "@/components/lead-form"
+import { MobileCallBar } from "@/components/mobile-call-bar"
 import { siteConfig } from "@/lib/site-config"
 import { WHATSAPP_URL } from "@/lib/contact-links"
 
@@ -108,6 +109,7 @@ export default function PricingPage() {
           </section>
         </main>
         <Footer />
+        <MobileCallBar formHref="#form" />
       </div>
     </>
   )
